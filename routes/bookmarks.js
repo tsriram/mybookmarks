@@ -21,7 +21,8 @@ router.post('/', function(req, res, next){
 			});
 		}
 		res.json({
-			status: 'success'
+			status: 'success',
+			msg: 'Bookmark ' + bookmark.title + ' saved successfully'
 		});
 	})
 });
