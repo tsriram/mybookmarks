@@ -7,8 +7,11 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var bookmarks = require('./routes/bookmarks');
 
 var app = express();
+
+var db = require('./src/db').connect('mongodb://localhost:27017/mybookmarks');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,8 +25,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// add db to req
+app.use(function(req, res, next){
+  req.db = db;
+  return next();
+});
+
 app.use('/', routes);
 app.use('/users', users);
+app.use('/bookmarks', bookmarks);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
