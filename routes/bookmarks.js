@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res, next){
-  req.db.models.Bookmark.find(function(err, results){
+  req.db.models.Bookmark.find({}, '_id title url folder', function(err, results){
   	res.send(results);
   });
 });
