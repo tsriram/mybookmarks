@@ -27,4 +27,32 @@ router.post('/', function(req, res, next){
 	})
 });
 
+router.put('/:id', function(req, res, next){
+	var id = req.params.id;
+	var ObjectId = require('mongoose').Types.ObjectId;
+	req.db.models.Bookmark.findOne({_id: new ObjectId(id)}, function(err, bookmark){
+		if(err){
+			res.status(500).json({
+				status: 'error',
+				msg: err.message || err
+			});
+		}
+		bookmark.title = req.body.title || bookmark.title;
+		bookmark.url = req.body.url || bookmark.url;
+		bookmark.folder = req.body.folder || bookmark.folder;
+		bookmark.save(function(err, newBookmark){
+			if(err){
+				res.status(500).json({
+					status: 'error',
+					msg: err.message || err
+				});
+			}
+			res.json({
+				status: 'success',
+				msg: 'Bookmark ' + newBookmark.title + ' updated successfully'
+			})
+		})
+	});
+});
+
 module.exports = router;
