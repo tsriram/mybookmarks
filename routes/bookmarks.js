@@ -12,7 +12,7 @@ router.post('/', function(req, res, next){
 	bookmark.title = req.body.title;
 	bookmark.url = req.body.url;
 	bookmark.folder = req.body.folder;
-	bookmark.save(function(err, bookmark){
+	bookmark.save(function(err, newBookmark){
 		if(err){
 			res.status(500).json({
 				status: 'error',
@@ -21,7 +21,7 @@ router.post('/', function(req, res, next){
 		}
 		res.json({
 			status: 'success',
-			msg: 'Bookmark ' + bookmark.title + ' saved successfully'
+			msg: 'Bookmark ' + newBookmark.title + ' saved successfully'
 		});
 	})
 });
