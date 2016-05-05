@@ -16,7 +16,12 @@ var BookmarkSchema = new Schema({
 	folder: String
 });
 
+var FolderSchema = new Schema({
+	name: {type: String, unique: true}
+});
+
 exports.db = mongoose;
 exports.models = {
-	Bookmark: mongoose.model('Bookmark', BookmarkSchema)
+	Bookmark: mongoose.model('Bookmark', BookmarkSchema),
+	Folder: mongoose.model('Folder', FolderSchema)
 };
