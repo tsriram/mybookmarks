@@ -8,7 +8,6 @@ router.get('/', function(req, res, next){
 });
 
 router.post('/', function(req, res, next){
-	console.log(req.body);
 	var bookmark = new req.db.models.Bookmark();
 	bookmark.title = req.body.title;
 	bookmark.url = req.body.url;
