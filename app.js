@@ -32,6 +32,21 @@ app.use(function(req, res, next){
   return next();
 });
 
+// Validate required fields
+app.use(function(req, res, next) {
+  req.validateRequiredFields = function validateRequiredFields(fields, obj) {
+    obj = obj || req.body;
+    fields.forEach(function(field) {
+      if (typeof obj[field] === 'undefined') {
+        var error = new Error("Required field " + field + " missing");
+        error.status = 400;
+        throw error;
+      }
+    });
+  };
+  return next();
+});
+
 app.use('/', routes);
 app.use('/users', users);
 app.use('/bookmarks', bookmarks);
@@ -44,27 +59,14 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
-
-// production error handler
-// no stacktraces leaked to user
+// error handler
 app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
+  err.status = err.status || 500;
+  res.status(err.status);
+  res.json({
+    status: 'error',
+    code: err.status,
+    error: err.message || err.toString()
   });
 });
 
