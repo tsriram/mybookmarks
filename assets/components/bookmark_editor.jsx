@@ -32,6 +32,7 @@ export class BookmarkEditor extends React.Component {
         super(props);
         this.displayName = 'Bookmark Editor';
         this.GET_FOLDERS_URL = '/folders';
+        this.SAVE_BOOKMARK_URL = '/bookmarks';
         this.state = {
         	folders: []
         }
@@ -63,8 +64,21 @@ export class BookmarkEditor extends React.Component {
     	});
     }
 
-    save(data){
-    	console.log('saving...', data);
+    saveBookmark(data){
+        var _self = this;
+    	$.ajax({
+            type: 'POST',
+            url: this.SAVE_BOOKMARK_URL,
+            dataType: 'json',
+            data: data,
+            success: function(result){
+                _self.refs.modal.closeModal();
+                swal({
+                    type: 'success',
+                    title: result.msg
+                });
+            }
+        });
     }
 
     render() {
@@ -74,11 +88,11 @@ export class BookmarkEditor extends React.Component {
               <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <h4 className="modal-title">{this.props.title}</h4>
             </div>
-            <MyForm layout='vertical' onSubmit={this.save}>
+            <MyForm layout='vertical' onSubmit={this.saveBookmark.bind(this)}>
 	        		<div className="modal-body">	        			
-		        			<Input id='url' name='url' label='URL' type='text' />
-		        			<Input name='title' label='Title' type='text' />
-		        			<Input name='folder' label='Folder' type='text' />		        			
+	        			<Input id='url' required name='url' label='URL' type='text' />
+	        			<Input name='title' label='Title' type='text' />
+	        			<Input name='folder' label='Folder' type='text' />		        			
 		        	</div>
 	        		<div className="modal-footer">
 	              <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
