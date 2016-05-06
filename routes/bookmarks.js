@@ -2,14 +2,20 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res, next){
-  req.db.models.Bookmark.find({}, '_id title url folder', function(err, results){
+  req.db.models.Bookmark.find({}, '_id title url folder').sort({_id:-1}).exec(function(err, results){
+  	if(err){
+  		res.status(500).json({
+  			status: 'error',
+  			msg: err.message
+  		});
+  	}
   	res.send(results);
   });
 });
 
 router.post('/', function(req, res, next){
 	req.validateRequiredFields(['url']);
-	
+
 	var bookmark = new req.db.models.Bookmark();
 	bookmark.title = req.body.title;
 	bookmark.url = req.body.url;
