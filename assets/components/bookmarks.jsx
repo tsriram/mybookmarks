@@ -35,9 +35,10 @@ class Bookmarks extends React.Component {
         return(
         	this.state.bookmarks
         		?
-        	<div>        		
+        	<div>
+                <h2 className='inline-block'>Bookmarks</h2>
         		<BookmarkEditor ref='editor' />
-        		<button onClick={this.showModal.bind(this)}>Add Bookmark</button>
+        		<button className='btn btn-primary btn-add-bookmark inline-block' onClick={this.showModal.bind(this)}>Add Bookmark</button>
         		{
         			this.state.bookmarks.map(function(bookmark, index){
 		        		return (
