@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BookmarkView} from './bookmark_view.jsx'
+import {BookmarkView} from './bookmark_view.jsx';
+import {BookmarkEditor} from './bookmark_editor.jsx';
 
 class Bookmarks extends React.Component {
     constructor(props) {
@@ -26,11 +27,17 @@ class Bookmarks extends React.Component {
     	});
     }
 
+    showModal(){
+    	this.refs.editor.open();
+    }
+
     render() {
         return(
         	this.state.bookmarks
         		?
-        	<div>
+        	<div>        		
+        		<BookmarkEditor ref='editor' />
+        		<button onClick={this.showModal.bind(this)}>Add Bookmark</button>
         		{
         			this.state.bookmarks.map(function(bookmark, index){
 		        		return (
