@@ -77,6 +77,7 @@ export class BookmarkEditor extends React.Component {
                     type: 'success',
                     title: result.msg
                 });
+                _self.props.updateBookmarks(data);
             }
         });
     }

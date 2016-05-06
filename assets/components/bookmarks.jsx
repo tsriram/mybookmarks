@@ -31,13 +31,21 @@ class Bookmarks extends React.Component {
     	this.refs.editor.open();
     }
 
+    updateBookmarks(bookmark){
+        var bookmarks = this.state.bookmarks;
+        bookmarks.unshift(bookmark);
+        this.setState({
+            bookmarks: bookmarks
+        });
+    }
+
     render() {
         return(
         	this.state.bookmarks
         		?
         	<div>
                 <h2 className='inline-block'>Bookmarks</h2>
-        		<BookmarkEditor ref='editor' />
+        		<BookmarkEditor ref='editor' updateBookmarks={this.updateBookmarks.bind(this)} />
         		<button className='btn btn-primary btn-add-bookmark inline-block' onClick={this.showModal.bind(this)}>Add Bookmark</button>
         		{
         			this.state.bookmarks.map(function(bookmark, index){
