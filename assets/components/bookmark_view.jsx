@@ -12,12 +12,15 @@ export class BookmarkView extends React.Component {
         	<div>
                 <div>
             		<h4 className='inline-block'>{this.props.bookmark.title}</h4>
-                    <button className='btn-bookmark-edit' onClick={this.props.onEdit.bind(this, this.props.bookmark)}>
+                    <button className='btn-bookmark-edit' title='Edit bookmark' onClick={this.props.onEdit.bind(this, this.props.bookmark)}>
                         <span className='glyphicon glyphicon-pencil'></span>
                     </button>
                 </div>
         		<a href={this.props.bookmark.url} target='_blank'>{this.props.bookmark.url}</a>
-        		<div>{this.props.bookmark.folder}</div>
+        		<div>
+                    <span className='glyphicon glyphicon-folder-open foler-icon' title='Folder' />
+                    {this.props.bookmark.folder}
+                </div>
         		<hr/>
         	</div>
         )
