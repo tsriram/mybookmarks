@@ -5,7 +5,7 @@ export class BookmarkView extends React.Component {
     constructor(props) {
         super(props);
         this.displayName = 'Bookmark View';
-        this.SCREENSHOT_BASE_URL = "http://api.screenshotlayer.com/api/capture?placeholder=1&access_key=bf6ea1cf3a39ec526e7eba15a46a7f3d&viewport=1440x900&width=250&url=";
+        this.SCREENSHOT_BASE_URL = "http://api.screenshotlayer.com/api/capture?access_key=bf6ea1cf3a39ec526e7eba15a46a7f3d&viewport=1440x900&width=250&url=";
     }
 
     render() {

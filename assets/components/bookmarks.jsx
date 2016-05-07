@@ -63,26 +63,31 @@ class Bookmarks extends React.Component {
     render() {
         var _self = this;
         return(
-        	this.state.bookmarks
-        		?
         	<div>
                 <h2 className='inline-block'>Bookmarks</h2>
         		<BookmarkEditor ref='editor' updateBookmarks={this.updateBookmarks.bind(this)} />
                 <FolderEditor ref='folderEditor' />
         		<button className='btn btn-primary btn-add-bookmark inline-block' onClick={this.showModal.bind(this)}>Add Bookmark</button>
                 <button className='btn btn-default btn-add-folder inline-block' onClick={this.showFolderModal.bind(this)}>Add Folder</button>
-                <div>
-            		{
-            			this.state.bookmarks.map(function(bookmark, index){
-        	        		return (
-        	        			<BookmarkView key={index} onEdit={_self.editBookmark.bind(_self)} bookmark={bookmark}> </BookmarkView>
-        	        		)
-        	        	})
-            		}
-                </div>
+                {
+                    this.state.bookmarks.length
+                        ?
+                    <div>
+                		{
+                			this.state.bookmarks.map(function(bookmark, index){
+            	        		return (
+            	        			<BookmarkView key={index} onEdit={_self.editBookmark.bind(_self)} bookmark={bookmark}> </BookmarkView>
+            	        		)
+            	        	})
+                		}
+                    </div>
+                        :
+                    <div>
+                        <h2>No bookmarks yet!</h2>
+                    </div>
+                }
         	</div>
-        		:
-        	<h2>No Bookmarks!</h2>
+        	
         );
     }
 }
