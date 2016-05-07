@@ -16,16 +16,16 @@ export class BootstrapModal extends React.Component {
     }
 
     openModal(){
-      $('#react-modal').modal('show');
+      $('#' + this.props.id).modal('show');
     }
 
     closeModal(){
-      $('#react-modal').modal('hide');
+      $('#' + this.props.id).modal('hide');
     }
 
     render() {
         return(
-          <div id='react-modal' className="modal fade" tabindex="-1" role="dialog">
+          <div id={this.props.id} className="modal fade" tabindex="-1" role="dialog">
             <div className="modal-dialog">
               <div className="modal-content">
                   {this.props.children}

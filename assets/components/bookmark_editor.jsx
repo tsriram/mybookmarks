@@ -2,30 +2,9 @@ import React from 'react';
 import {BootstrapModal} from './common/modal.jsx';
 import Formsy from 'formsy-react';
 import FRC from 'formsy-react-components';
+import {MyForm} from './common/myform.jsx';
 
 const { Input, Row, Select } = FRC;
-
-const MyForm = React.createClass({
-
-    mixins: [FRC.ParentContextMixin],
-
-    propTypes: {
-        children: React.PropTypes.node
-    },
-
-    render() {
-        return (
-            <Formsy.Form
-                className={this.getLayoutClassName()}
-                {...this.props}
-                ref="formsy"
-            >
-                {this.props.children}
-            </Formsy.Form>
-        );
-    }
-
-});
 
 export class BookmarkEditor extends React.Component {
     constructor(props) {
@@ -102,10 +81,10 @@ export class BookmarkEditor extends React.Component {
 
     render() {
         return(
-        	<BootstrapModal ref='modal' onClose={this.setInitState.bind(this)} >
+        	<BootstrapModal ref='modal' id='bookmark-editor' onClose={this.setInitState.bind(this)} >
         		<div className="modal-header">
               <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 className="modal-title">{this.props.title}</h4>
+              <h4 className="modal-title">Bookmark</h4>
             </div>
             <MyForm layout='vertical' ref='myform' onSubmit={this.saveBookmark.bind(this)}>
 	        		<div className="modal-body">	        			
