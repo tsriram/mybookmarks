@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "watch": "nodemon -e js bin/www",
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "docs": "apidoc -f '.*\\.js$' -f '.*\\.sjs$' -i routes/ -i src/ -o doc && open doc/index.html"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
@@ -31,5 +32,12 @@
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0"
+  },
+  "apidoc": {
+    "name": "Bookmarks API",
+    "version": "0.1.0-alpha1",
+    "title": "Bookmarks API documentation",
+    "description": "API reference",
+    "url": "https://api.mybookmarks.com/v1"
   }
 }

@@ -1,6 +1,29 @@
 var db = require('./db');
 var folder = require('./folder');
 
+/**
+ * @api {get} /bookmarks Get all bookmarks
+ * @apiName GetBookmarks
+ * @apiGroup Bookmark
+ *
+ * @apiSuccessExample {json} Success:
+ *   HTTP/1.1 200 OK
+ *	[
+ *		{
+ *			"_id": <bookmark ID>,
+ *			"title": <bookmark Title>,
+ *			"url": <bookmark URL>,
+ *			"folder": <bookmark Folder>,
+ *	  }
+ *	]
+ *
+ * @apiErrorExample {json} Error:
+ *   HTTP/1.1 500 Internal Server Error
+ *   {
+ *     "status": "error",
+ *     "msg": <Error Message>
+ *   }
+ */
 function getAll(cb){
 	db.models.Bookmark.find({}, '_id title url folder').sort({_id:-1}).exec(function(err, results){
   	if(err){
@@ -12,6 +35,32 @@ function getAll(cb){
   	cb(null, results);
   });
 }
+
+/**
+ * @api {post} /bookmarks Save bookmark
+ * @apiName SaveBookmark
+ * @apiGroup Bookmark
+ *
+ * @apiHeader Content-Type `application/json`
+ *
+ * @apiParam {String} URL Bookmark URL
+ * @apiParam {String} Title Bookmark Title
+ * @apiParam {String} Folder Bookmark Folder (Will be created if required)
+ *
+ * @apiSuccessExample {json} Success:
+ *   HTTP/1.1 200 OK
+ *		{
+ *			"status": "success",
+ *			"msg": <Success Message>,
+ *	  }
+ *
+ * @apiErrorExample {json} Error:
+ *   HTTP/1.1 500 Internal Server Error
+ *   {
+ *     "status": "error",
+ *     "msg": <Error Message>
+ *   }
+ */
 
 function saveBookmark(data, cb){
 	var newBookmark = new db.models.Bookmark();
@@ -35,6 +84,34 @@ function saveBookmark(data, cb){
 		}
 	})
 }
+
+/**
+ * @api {put} /bookmarks/:id Update bookmark
+ * @apiName UpdateBookmark
+ * @apiGroup Bookmark
+ *
+ * @apiHeader Content-Type `application/json`
+ *
+ * @apiParam {String} id Bookmark ID
+ *
+ * @apiParam {String} URL Bookmark URL
+ * @apiParam {String} Title Bookmark Title
+ * @apiParam {String} Folder Bookmark Folder (Will be created if required)
+ *
+ * @apiSuccessExample {json} Success:
+ *   HTTP/1.1 200 OK
+ *		{
+ *			"status": "success",
+ *			"msg": <Success Message>,
+ *	  }
+ *
+ * @apiErrorExample {json} Error:
+ *   HTTP/1.1 500 Internal Server Error
+ *   {
+ *     "status": "error",
+ *     "msg": <Error Message>
+ *   }
+ */
 
 function updateBookmark(data, cb){
 	var ObjectId = require('mongoose').Types.ObjectId;
