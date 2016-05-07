@@ -40,6 +40,9 @@ export class FolderEditor extends React.Component{
 
 	openEditor(){
 		this.refs.folderModal.openModal();
+		setTimeout(function(){
+  		$('#name').focus();	
+  	}, 500);
 	}
 
 	closeEditor(){
