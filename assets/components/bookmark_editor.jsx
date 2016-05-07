@@ -109,9 +109,9 @@ export class BookmarkEditor extends React.Component {
             </div>
             <MyForm layout='vertical' ref='myform' onSubmit={this.saveBookmark.bind(this)}>
 	        		<div className="modal-body">	        			
-	        			<Input id='url' value={this.state.bookmark.url} required name='url' label='URL' type='text' />
-	        			<Input name='title' value={this.state.bookmark.title} label='Title' type='text' />
-	        			<Input name='folder' list='folders' value={this.state.bookmark.folder} label='Folder' type='text' />		        			
+	        			<Input id='url' value={this.state.bookmark.url || ''} required name='url' label='URL' type='text' />
+	        			<Input name='title' value={this.state.bookmark.title || ''} label='Title' type='text' />
+	        			<Input name='folder' list='folders' value={this.state.bookmark.folder || ''} label='Folder' type='text' />		        			
 		        	</div>
 	        		<div className="modal-footer">
 	              <button type="button" className="btn btn-default" onClick={this.closeEditor.bind(this)}>Close</button>
