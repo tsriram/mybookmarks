@@ -42,10 +42,10 @@ export class BookmarkEditor extends React.Component {
 
     setInitState(){
         this.setState({
-            folders: [],
             edit: false,
             bookmark: {}
         });
+        this.refs.myform.refs.formsy.reset();
     }
 
     open(bookmark){
@@ -54,6 +54,8 @@ export class BookmarkEditor extends React.Component {
                 bookmark: bookmark,
                 edit: true
             });
+        }else{
+            this.setInitState();
         }
     	this.refs.modal.openModal();
     	setTimeout(function(){
@@ -88,13 +90,12 @@ export class BookmarkEditor extends React.Component {
             dataType: 'json',
             data: data,
             success: function(result){
-                _self.refs.modal.closeModal();
+                _self.props.updateBookmarks(data, _self.state.bookmark._id);
+                _self.closeEditor();
                 swal({
                     type: 'success',
                     title: result.msg
-                });
-                _self.props.updateBookmarks(data, _self.state.bookmark._id);
-                _self.setInitState();
+                });                
             }
         });
     }
@@ -106,7 +107,7 @@ export class BookmarkEditor extends React.Component {
               <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
               <h4 className="modal-title">{this.props.title}</h4>
             </div>
-            <MyForm layout='vertical' onSubmit={this.saveBookmark.bind(this)}>
+            <MyForm layout='vertical' ref='myform' onSubmit={this.saveBookmark.bind(this)}>
 	        		<div className="modal-body">	        			
 	        			<Input id='url' value={this.state.bookmark.url} required name='url' label='URL' type='text' />
 	        			<Input name='title' value={this.state.bookmark.title} label='Title' type='text' />
@@ -119,9 +120,8 @@ export class BookmarkEditor extends React.Component {
                 <datalist id="folders">
                     {
                         this.state.folders.map(function(folder){
-                            console.log(folder);
                             return(
-                                <option value={folder.name}>{folder.name}</option>
+                                <option key={folder.name} value={folder.name}>{folder.name}</option>
                             )
                         })
                     }

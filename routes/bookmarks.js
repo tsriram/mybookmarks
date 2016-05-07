@@ -1,65 +1,51 @@
 var express = require('express');
 var router = express.Router();
-
+var bookmark = require('../src/bookmark');
 router.get('/', function(req, res, next){
-  req.db.models.Bookmark.find({}, '_id title url folder').sort({_id:-1}).exec(function(err, results){
+  bookmark.getAll(function(err, bookmarks){
   	if(err){
-  		res.status(500).json({
-  			status: 'error',
-  			msg: err.message
-  		});
+  		res.status(500).json(err)
+  	}else{
+  		res.send(bookmarks);
   	}
-  	res.send(results);
   });
 });
 
 router.post('/', function(req, res, next){
 	req.validateRequiredFields(['url']);
 
-	var bookmark = new req.db.models.Bookmark();
-	bookmark.title = req.body.title;
-	bookmark.url = req.body.url;
-	bookmark.folder = req.body.folder;
-	bookmark.save(function(err, newBookmark){
+	var newBookmark = {
+		title: req.body.title,
+		url: req.body.url,
+		folder: req.body.folder
+	};
+
+	bookmark.save(newBookmark, function(err, result){
 		if(err){
-			res.status(500).json({
-				status: 'error',
-				msg: err.message || err
-			});
+			res.status(500).json(err);
+		}else{
+			res.json(result);
 		}
-		res.json({
-			status: 'success',
-			msg: 'Bookmark ' + newBookmark.title + ' saved successfully'
-		});
 	})
 });
 
 router.put('/:id', function(req, res, next){
-	var id = req.params.id;
-	var ObjectId = require('mongoose').Types.ObjectId;
-	req.db.models.Bookmark.findOne({_id: new ObjectId(id)}, function(err, bookmark){
+	req.validateRequiredFields(['url']);
+
+	var newBookmark = {
+		id: req.params.id,
+		title: req.body.title,
+		url: req.body.url,
+		folder: req.body.folder
+	};
+	
+	bookmark.update(newBookmark, function(err, result){
 		if(err){
-			res.status(500).json({
-				status: 'error',
-				msg: err.message || err
-			});
+			res.status(500).json(err);
+		}else{
+			res.json(result);
 		}
-		bookmark.title = req.body.title || bookmark.title;
-		bookmark.url = req.body.url || bookmark.url;
-		bookmark.folder = req.body.folder || bookmark.folder;
-		bookmark.save(function(err, newBookmark){
-			if(err){
-				res.status(500).json({
-					status: 'error',
-					msg: err.message || err
-				});
-			}
-			res.json({
-				status: 'success',
-				msg: 'Bookmark ' + newBookmark.title + ' updated successfully'
-			})
-		})
-	});
+	})
 });
 
 module.exports = router;
