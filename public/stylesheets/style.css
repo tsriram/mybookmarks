@@ -17,3 +17,37 @@
 	margin-right: 5px;
 	font-size: 12px;
 }
+
+.bookmark{
+	width: 250px;
+  display: inline-block;
+  height: 156px;
+  margin: 20px;
+  padding: 10px;
+  border: 1px solid #dcdcdc;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+}
+
+.bookmark-title{
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.site-img{
+	/*background: url("http://api.screenshotlayer.com/api/capture?access_key=bf6ea1cf3a39ec526e7eba15a46a7f3d&url=http://tenmiles.com&viewport=1440x900&width=250");*/
+	background-repeat: no-repeat;
+	opacity: 0.2;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	position: absolute;
+	z-index: -1;
+}
+
+.bookmark-text{
+	position: absolute;
+	bottom: 10px;
+}

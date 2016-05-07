@@ -71,13 +71,15 @@ class Bookmarks extends React.Component {
                 <FolderEditor ref='folderEditor' />
         		<button className='btn btn-primary btn-add-bookmark inline-block' onClick={this.showModal.bind(this)}>Add Bookmark</button>
                 <button className='btn btn-default btn-add-folder inline-block' onClick={this.showFolderModal.bind(this)}>Add Folder</button>
-        		{
-        			this.state.bookmarks.map(function(bookmark, index){
-		        		return (
-		        			<BookmarkView key={index} onEdit={_self.editBookmark.bind(_self)} bookmark={bookmark}> </BookmarkView>
-		        		)
-		        	})
-        		}	        	
+                <div>
+            		{
+            			this.state.bookmarks.map(function(bookmark, index){
+        	        		return (
+        	        			<BookmarkView key={index} onEdit={_self.editBookmark.bind(_self)} bookmark={bookmark}> </BookmarkView>
+        	        		)
+        	        	})
+            		}
+                </div>
         	</div>
         		:
         	<h2>No Bookmarks!</h2>
