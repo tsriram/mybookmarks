@@ -41,7 +41,6 @@ export class BookmarkEditor extends React.Component {
     }
 
     setInitState(){
-        console.log('BookmarkEditor setInitState');
         this.setState({
             folders: [],
             edit: false,
@@ -74,13 +73,8 @@ export class BookmarkEditor extends React.Component {
     		dataType: 'json',
     		cache: false,
     		success: function(data){
-    			var folders = data.map(function(folder){ 
-    				return {
-    					label: folder.name
-    				}; 
-    			});
     			_self.setState({
-    				folders: folders
+    				folders: data
     			});
     		}
     	});
@@ -116,12 +110,22 @@ export class BookmarkEditor extends React.Component {
 	        		<div className="modal-body">	        			
 	        			<Input id='url' value={this.state.bookmark.url} required name='url' label='URL' type='text' />
 	        			<Input name='title' value={this.state.bookmark.title} label='Title' type='text' />
-	        			<Input name='folder' value={this.state.bookmark.folder} label='Folder' type='text' />		        			
+	        			<Input name='folder' list='folders' value={this.state.bookmark.folder} label='Folder' type='text' />		        			
 		        	</div>
 	        		<div className="modal-footer">
 	              <button type="button" className="btn btn-default" onClick={this.closeEditor.bind(this)}>Close</button>
 	              <input className="btn btn-primary" formNoValidate={true} type="submit" defaultValue="Submit" />
 	            </div>
+                <datalist id="folders">
+                    {
+                        this.state.folders.map(function(folder){
+                            console.log(folder);
+                            return(
+                                <option value={folder.name}>{folder.name}</option>
+                            )
+                        })
+                    }
+                </datalist>
             </MyForm>
         	</BootstrapModal>
         )
