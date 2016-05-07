@@ -1,7 +1,7 @@
 var db = require('./db');
 
 function getAll(cb){
-	db.models.Folder.find({}, '_id name', function(err, results){
+	db.models.Folder.find({}, '_id name').sort({_id:-1}).exec(function(err, results){
   	if(err){
   		cb({
   			status: 'error',
@@ -18,10 +18,17 @@ function save(data, cb){
 	newFolder.name = data.name;
 	newFolder.save(function(err, folder){
 		if(err){
-			cb({
-				status: 'error',
-				msg: err.message
-			}, null);
+			if(err.code === 11000){
+				cb({
+					status: 'error',
+					msg: 'Folder ' + data.name + ' exists already'
+				}, null);
+			}else{
+				cb({
+					status: 'error',
+					msg: err.message
+				}, null);	
+			}			
 		}else{
 			cb(null, {
 				status: 'success',

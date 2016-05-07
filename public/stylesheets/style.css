@@ -2,7 +2,7 @@
 	display: inline-block;
 }
 
-.btn-add-bookmark{
+.btn-add-bookmark, .btn-add-folder{
 	margin-left: 20px;
 }
 

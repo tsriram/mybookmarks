@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BookmarkView} from './bookmark_view.jsx';
 import {BookmarkEditor} from './bookmark_editor.jsx';
+import {FolderEditor} from './folder_editor.jsx';
 
 class Bookmarks extends React.Component {
     constructor(props) {
@@ -29,6 +30,10 @@ class Bookmarks extends React.Component {
 
     showModal(){
     	this.refs.editor.open();
+    }
+
+    showFolderModal(){
+        this.refs.folderEditor.openEditor();
     }
 
     updateBookmarks(bookmark, _id){
@@ -63,7 +68,9 @@ class Bookmarks extends React.Component {
         	<div>
                 <h2 className='inline-block'>Bookmarks</h2>
         		<BookmarkEditor ref='editor' updateBookmarks={this.updateBookmarks.bind(this)} />
+                <FolderEditor ref='folderEditor' />
         		<button className='btn btn-primary btn-add-bookmark inline-block' onClick={this.showModal.bind(this)}>Add Bookmark</button>
+                <button className='btn btn-default btn-add-folder inline-block' onClick={this.showFolderModal.bind(this)}>Add Folder</button>
         		{
         			this.state.bookmarks.map(function(bookmark, index){
 		        		return (
