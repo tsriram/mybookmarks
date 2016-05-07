@@ -31,15 +31,32 @@ class Bookmarks extends React.Component {
     	this.refs.editor.open();
     }
 
-    updateBookmarks(bookmark){
+    updateBookmarks(bookmark, _id){
         var bookmarks = this.state.bookmarks;
-        bookmarks.unshift(bookmark);
+        if(_id){
+            for (var i = bookmarks.length - 1; i >= 0; i--) {
+                if(bookmarks[i]._id === _id){
+                    bookmarks[i].url = bookmark.url;
+                    bookmarks[i].title = bookmark.title;
+                    bookmarks[i].folder = bookmark.folder;
+                    break;
+                }
+            }
+        }else{
+            bookmarks.unshift(bookmark);
+        }
         this.setState({
             bookmarks: bookmarks
         });
     }
 
+    editBookmark(bookmark){
+        console.log(bookmark);
+        this.refs.editor.open(bookmark);
+    }
+
     render() {
+        var _self = this;
         return(
         	this.state.bookmarks
         		?
@@ -50,7 +67,7 @@ class Bookmarks extends React.Component {
         		{
         			this.state.bookmarks.map(function(bookmark, index){
 		        		return (
-		        			<BookmarkView key={bookmark.title + index} {...bookmark}> </BookmarkView>
+		        			<BookmarkView key={index} onEdit={_self.editBookmark.bind(_self)} bookmark={bookmark}> </BookmarkView>
 		        		)
 		        	})
         		}	        	

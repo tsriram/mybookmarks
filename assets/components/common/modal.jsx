@@ -3,7 +3,16 @@ import React from 'react';
 export class BootstrapModal extends React.Component {
     constructor(props) {
         super(props);
-        this.displayName = 'Modal';
+        this.displayName = 'Modal';        
+    }
+
+    componentDidMount(){
+      var _self = this;
+      if(this.props.onClose){
+        $('#react-modal').on('hidden.bs.modal', function(e){
+          _self.props.onClose();
+        });
+      }  
     }
 
     openModal(){

@@ -5,3 +5,10 @@
 .btn-add-bookmark{
 	margin-left: 20px;
 }
+
+.btn-bookmark-edit{
+	border: none;
+	outline: none;
+	background: transparent;
+	font-size: 14px;
+}
