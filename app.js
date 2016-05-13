@@ -37,7 +37,7 @@ app.use(function(req, res, next) {
   req.validateRequiredFields = function validateRequiredFields(fields, obj) {
     obj = obj || req.body;
     fields.forEach(function(field) {
-      if (typeof obj[field] === 'undefined') {
+      if (typeof obj[field] === 'undefined' || obj[field] === '') {
         var error = new Error("Required field " + field + " missing");
         error.status = 400;
         throw error;
