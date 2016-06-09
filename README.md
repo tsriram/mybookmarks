@@ -15,4 +15,3 @@ Sample project to try out Node.js / Express / MongoDB / React et al.
 
 ### External APIs used
 1. [screenshotLayer](https://screenshotlayer.com/)
-
